@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+
+        <script>
+            // * this를 사용하는 이유
+            const title = function (opt) {
+                this.opt = opt;
+            };
+
+            title.prototype = {
+                getValue: function () {
+                    return this.opt;
+                }
+            }
+
+            const one = new title(100);
+            const two = new title([200, 300]);
+            one.opt = 77;
+/* 
+            console.log(one.getValue()); // 77
+            console.log(two.getValue()); // [200, 300] */
+
+            //===================================================================
+            
+            const youName = "gg"
+            const tt = function (e) {
+                tt.value = e;
+            }
+
+            tt.prototype = {
+               getValue : () => {
+                    return tt.value
+                }
+            }
+            const num = 17
+            const uName = new tt(youName);
+            const agg = new tt(num);
+            agg.value = 88
+            
+            /* console.log(uName.getValue()); // 17
+            console.log(agg.getValue()); // 17 */
+
+            // this를 사용하는 이유 
+
+            const key = Symbol("key")
+            const foo = {
+                name : "ldh"
+            }
+            foo[key] = `value`;
+            foo.age = 17
+            foo.weight = () => {
+                console.log("77kg")
+            }
+
+            foo.name = "LLL"
+
+        </script>
+    </body>
+</html>
