@@ -9,40 +9,82 @@
     <body>
 
         <script>
-            // * this를 사용하는 이유             const title = function (opt) {
-            // this.opt = opt;             };             title.prototype = {
-            // getValue: function () {                     return this.opt;
-            // }             }             const one = new title(100);             const two
+            // * this를 사용하는 이유             const title = function (opt) { this.opt = opt; };
+            // title.prototype = { getValue: function () { return this.opt; }             }
+            // const one = new title(100); const two
             // = new title([200, 300]);             one.opt = 77; /*
             // console.log(one.getValue());  77             console.log(two.getValue());
             // [200, 300] */
-            // ===================================================================
-            // const youName = "gg"             const tt = function (e) {
-            // tt.value = e;             }             tt.prototype = {
-            // getValue : () => {                     return tt.value                 }
-            // }             const num = 17             const uName = new tt(youName);
-            // const agg = new tt(num);             agg.value = 88             /*
-            // console.log(uName.getValue());  17             console.log(agg.getValue());
-            // 17 */              this를 사용하는 이유             const key = Symbol("key")
-            // const foo = {                 name : "ldh"             }             foo[key]
+            // =================================================================== const
+            // youName = "gg"             const tt = function (e) { tt.value = e; }
+            // tt.prototype = { getValue : () => {                     return tt.value
+            // } }             const num = 17             const uName = new tt(youName);
+            // const agg = new tt(num);             agg.value = 88 /*
+            // console.log(uName.getValue());  17 console.log(agg.getValue()); 17 */
+            // this를 사용하는 이유 const key = Symbol("key") const foo = {                 name :
+            // "ldh" }             foo[key]
             // = `value`;             foo.age = 17             foo.weight = () => {
             // console.log("77kg")             }             foo.name = "LLL"
+            // =================================================================== 스코프 체인
+            // const x = 100; const foo = () => {     const y = 200;     const bar = () => {
+            // console.log(x);         console.log(y);     }     bar(); } foo();
+            // =================================================================== 
 
-            // 스코프 체인
-            
-            const x = 100;
 
-            const foo = () => {
-                const y = 200;
-                const bar = () => {
-                    console.log(x);
-                    console.log(y);
+            // 클로저 함수
+            let users = [
+                {
+                    name: "John",
+                    age: 20,
+                    surname: "Johnson"
+                }, {
+                    name: "Pete",
+                    age: 18,
+                    surname: "Peterson"
+                }, {
+                    name: "Ann",
+                    age: 19,
+                    surname: "Hathaway"
                 }
-                bar();
+            ];
+
+            // users.sort((a, b) => { a.name > b.name ? 1 : -1 }) users.sort((a, b) => {
+            // a.age > b.age ? 1 : -1 })
+
+            function byField(method) {
+                return function (a, b) {
+                    return a.method > b.method
+                        ? 1
+                        : -1
+                }
             }
-            foo();
-            
-            
+
+            users.sort(byField('name'));
+            users.sort(byField("age"));
+
+            console.log(users);
+
+
+
+            function makeArmy() {
+                let shooters = [];
+
+                let i = 0;
+                while (i < 10) {
+                    let j = i;
+                    let shooter = function () { 
+                        alert(j)
+                    };
+                    shooters.push(shooter)
+                    i++;
+                }
+                return shooters;
+            }
+
+            let army = makeArmy();
+
+            army[0](); 
+            army[5](); 
         </script>
     </body>
 </html>
